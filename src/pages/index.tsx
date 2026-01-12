@@ -69,7 +69,7 @@ export default function Home(): JSX.Element {
                 <div className="card__body">
                   <p>
                     Expose your bookmarks as short redirect URLs using the format 
-                    <code>/{user_key}/{slug}</code>. Perfect for creating memorable, shareable links.
+                    <code>{'/{user_key}/{slug}'}</code>. Perfect for creating memorable, shareable links.
                   </p>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import searchLocal from '@easyops-cn/docusaurus-search-local';
 
 const config: Config = {
   title: 'SlugBase Documentation',
@@ -47,6 +48,21 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    [
+      searchLocal,
+      {
+        // Options for the search plugin
+        hashed: true,
+        language: ['en'],
+        highlightSearchTermsOnTargetPage: true,
+        explicitSearchResultPath: true,
+        indexBlog: false,
+        indexPages: false,
+      },
+    ],
+  ],
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
@@ -64,7 +80,7 @@ const config: Config = {
           label: 'Documentation',
         },
         {
-          href: 'https://github.com/your-org/slugbase',
+          href: 'https://github.com/ghotso/slugbase',
           label: 'GitHub',
           position: 'right',
         },
@@ -91,7 +107,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/your-org/slugbase',
+              href: 'https://github.com/ghotso/slugbase',
             },
           ],
         },

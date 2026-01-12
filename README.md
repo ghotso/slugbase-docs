@@ -89,12 +89,23 @@ Content here...
 
 3. Add the page to `sidebars.ts` in the appropriate category
 
+## Search Functionality
+
+The documentation includes a local search feature that:
+- Searches through all documentation pages
+- Works offline (no external services required)
+- Highlights search terms in results
+- Provides instant search results as you type
+
+The search bar appears automatically in the navbar. Search indexes are generated during the build process.
+
 ## Customization
 
 - **Theme**: Edit `src/css/custom.css` to customize colors and styles
 - **Homepage**: Edit `src/pages/index.tsx` to modify the homepage
 - **Configuration**: Edit `docusaurus.config.ts` for site-wide settings
 - **Sidebar**: Edit `sidebars.ts` to reorganize the documentation structure
+- **Search**: Configure search options in `docusaurus.config.ts` under the `plugins` section
 
 ## Docker
 
