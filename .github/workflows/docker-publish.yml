@@ -117,6 +117,9 @@ jobs:
           TS_IP: ${{ steps.get-ip.outputs.TS_IP }}
           PORT: 8413
           SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          REGISTRY: ${{ env.REGISTRY }}
         run: |
           # Deploy on remote machine via Tailscale IP
           # IMPORTANT: If you see "Tailscale SSH requires an additional check" error,
@@ -127,9 +130,9 @@ jobs:
               -o UserKnownHostsFile=~/.ssh/known_hosts \
               -p ${SSH_PORT} \
               -o PreferredAuthentications=publickey \
-              root@${TS_IP} << 'DEPLOY_EOF'
+              root@${TS_IP} << EOF
             # Login to GHCR
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
+            echo "${GITHUB_TOKEN}" | docker login ${REGISTRY} -u ${GITHUB_ACTOR} --password-stdin
             
             # Pull the latest image
             docker pull ${IMAGE_NAME}
@@ -147,4 +150,4 @@ jobs:
             
             # Clean up old images
             docker image prune -f
-          DEPLOY_EOF
+          EOF
