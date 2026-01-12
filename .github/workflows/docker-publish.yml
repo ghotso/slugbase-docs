@@ -61,3 +61,57 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    
+    steps:
+      - name: Install Tailscale
+        run: |
+          curl -fsSL https://tailscale.com/install.sh | sh
+          sudo tailscale up --authkey=${{ secrets.TS_KEY }} --accept-routes
+
+      - name: Wait for Tailscale connection
+        run: |
+          echo "Waiting for Tailscale to establish connection..."
+          sleep 10
+          tailscale status
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H v2202508292409370353 >> ~/.ssh/known_hosts || true
+
+      - name: Deploy to remote server
+        env:
+          IMAGE_NAME: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          HOSTNAME: v2202508292409370353
+          PORT: 8413
+        run: |
+          # Login to GHCR on remote machine
+          # Deploy on remote machine via Tailscale
+          ssh -o StrictHostKeyChecking=no root@${HOSTNAME} << EOF
+            # Login to GHCR
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
+            
+            # Pull the latest image
+            docker pull ${IMAGE_NAME}
+            
+            # Stop and remove existing container if it exists
+            docker stop slugbase-docs || true
+            docker rm slugbase-docs || true
+            
+            # Run the new container
+            docker run -d \
+              --name slugbase-docs \
+              --restart unless-stopped \
+              -p ${PORT}:80 \
+              ${IMAGE_NAME}
+            
+            # Clean up old images
+            docker image prune -f
+          EOF
