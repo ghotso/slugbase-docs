@@ -1,0 +1,10 @@
+{
+  // This file is used by Docusaurus. You can edit it, but don't remove it!
+  "extends": "@docusaurus/tsconfig",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@site/*": ["./*"]
+    }
+  }
+}

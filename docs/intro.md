@@ -26,7 +26,7 @@ Organize bookmarks using:
 - **Filters** - Quickly find bookmarks by folder, tag, or combinations
 
 ### 🔗 Link Forwarding (Optional)
-Expose your bookmarks as short redirect URLs using the format `/{user_key}/{slug}`. Perfect for creating memorable, shareable links.
+Expose your bookmarks as short redirect URLs using the format `/{`{`user_key`}`}/{slug}`. Perfect for creating memorable, shareable links.
 
 ### 👥 Sharing & Collaboration
 Share bookmarks and folders with:
