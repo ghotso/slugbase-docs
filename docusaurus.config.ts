@@ -9,10 +9,10 @@ const config: Config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-docs-site.com',
+  url: 'https://slugbase.ghotso.dev',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployments, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/docs/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
