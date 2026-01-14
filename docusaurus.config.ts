@@ -46,6 +46,8 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl: undefined,
+          // Set routeBasePath to empty so docs are at /docs/ not /docs/docs/
+          routeBasePath: '/',
         },
         blog: false,
         theme: {
@@ -101,11 +103,11 @@ const config: Config = {
           items: [
             {
               label: 'Introduction',
-              to: 'intro',
+              to: '/docs/intro',
             },
             {
               label: 'Setup',
-              to: 'setup',
+              to: '/docs/setup',
             },
           ],
         },
